@@ -1,8 +1,30 @@
-angular.module('ListlyApp', ['ngRoute'])
-  .controller('TestController', TestController);
+angular.module('ListlyApp', ['ngRoute', 'templates'])
+  .controller('ListsController', ListsController)
+  .config(config);
 
-TestController.$inject = [];
-function TestController() {
-  console.log('test controller is working');
-  this.test = 'hello world';
+config.$inject = ['$routeProvider', '$locationProvider'];
+function config (  $routeProvider,   $locationProvider  )  {
+  $routeProvider
+    .when('/', {
+      templateUrl: 'liststemplate.html',
+      controller: 'ListsController',
+      controllerAs: 'listsCtrl'
+    })
+    .otherwise({
+      redirectTo: '/'
+    });
+
+
+  $locationProvider
+    .html5Mode({
+      enabled: true,
+      requireBase: false
+    });
+}
+
+
+function ListsController() {
+  var vm = this;
+  console.log('controller working');
+  this.test = 'hello World';
 }
