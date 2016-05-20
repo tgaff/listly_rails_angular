@@ -27,14 +27,15 @@
       <!-- list of lists -->
       <ul class="list-group">
 
-        <li class="list-group-item">
+
+        <li class="list-group-item" ng-repeat="list in listsCtrl.lists">
 
           <!--  description -->
-          description
+          {{list.name}}
 
           <div class="pull-right">
             <!-- pencil icon to toggle update form -->
-            <a href="javascript:void(0)" data-toggle="collapse" data-target="#update-1">
+            <a ng-click="listsCtrl.toggleEditForm(list)">
               <span class="glyphicon glyphicon-pencil"></span>
             </a>
 
@@ -45,39 +46,7 @@
           </div>
 
           <!-- form to update todo -->
-          <div class="collapse" id="update-1">
-            <br>
-            <form class="form-inline update-todo">
-              <div class="form-group">
-                <input type="text" name="task" class="form-control" placeholder="Task" value="task">
-              </div>
-              <div class="form-group">
-                <input type="submit" class="btn btn-block btn-default" value="Update">
-              </div>
-            </form>
-          </div>
-        </li>
-
-
-        <li class="list-group-item">
-
-          <!-- description -->
-          description
-
-          <div class="pull-right">
-            <!-- pencil icon to toggle update form -->
-            <a href="javascript:void(0)" data-toggle="collapse" data-target="#update-2">
-              <span class="glyphicon glyphicon-pencil"></span>
-            </a>
-
-            <!-- trash can icon to delete todo -->
-             <a href="javascript:void(0)" class="delete-todo">
-              <span class="glyphicon glyphicon-trash"></span>
-            </a>
-          </div>
-
-          <!-- form to update todo -->
-          <div class="collapse" id="update-2">
+          <div ng-show="list.showForm">
             <br>
             <form class="form-inline update-todo">
               <div class="form-group">
