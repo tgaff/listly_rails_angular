@@ -2,8 +2,8 @@ angular
   .module('ListlyApp')
   .controller('ListsController', ListsController);
 
-ListsController.$inject = ['ListsService'];
-function ListsController(   ListsService    ) {
+ListsController.$inject = ['ListsService', '$location'];
+function ListsController(   ListsService,   $location    ) {
   var vm = this;
   console.log('ListsController is live');
   vm.lists = [];
@@ -11,6 +11,7 @@ function ListsController(   ListsService    ) {
   vm.toggleEditForm = toggleEditForm;
   vm.deleteList = deleteList;
   vm.createList = createList;
+  vm.showList = showList;
   // fetch data
   getLists();
 
@@ -45,5 +46,10 @@ function ListsController(   ListsService    ) {
   function handleCreateSuccess(data) {
     console.log('created', data);
     vm.lists.unshift(data);
+  }
+
+  function showList(list) {
+    console.log('transition to showing list:', list);
+    $location.path('/lists/' + list.id);
   }
 }

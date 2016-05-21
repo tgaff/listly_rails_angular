@@ -28,7 +28,7 @@
       <ul class="list-group">
 
 
-        <li class="list-group-item" ng-repeat="list in listsCtrl.lists">
+        <li class="list-group-item" ng-repeat="list in listsCtrl.lists" ng-click="listsCtrl.showList(list)">
 
           <!--  description -->
           {{list.name}}
