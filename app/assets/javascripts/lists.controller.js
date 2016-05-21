@@ -17,9 +17,10 @@ function ListsController(   ListsService    ) {
   }
 
   function getLists() {
-    ListsService.query().then(function(data){
-      console.log('here\'s the books data in the controller', data);
+    ListsService.query(function(data){
+      console.log('here\'s the lists data in the controller', data);
       vm.lists = data;
     });
   }
+  
 }

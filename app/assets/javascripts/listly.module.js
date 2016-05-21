@@ -1,4 +1,4 @@
-angular.module('ListlyApp', ['ngRoute', 'templates'])
+angular.module('ListlyApp', ['ngRoute', 'templates', 'ngResource'])
   .config(config);
 
 config.$inject = ['$routeProvider', '$locationProvider'];
