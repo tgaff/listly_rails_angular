@@ -8,7 +8,7 @@ function ListsController(   ListsService    ) {
   console.log('ListsController is live');
   vm.lists = [];
   vm.toggleEditForm = toggleEditForm;
-
+  vm.deleteList = deleteList;
   // fetch data
   getLists();
 
@@ -22,5 +22,14 @@ function ListsController(   ListsService    ) {
       vm.lists = data;
     });
   }
-  
+
+  function deleteList(list) {
+    ListsService.remove({id: list.id}, handleDeleteSuccess);
+
+      function handleDeleteSuccess(data) {
+        console.log('deleted');
+        vm.lists.splice(vm.lists.indexOf(list), 1);
+      }
+  }
+
 }

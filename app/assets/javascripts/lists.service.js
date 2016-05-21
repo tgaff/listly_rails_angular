@@ -8,10 +8,10 @@ angular.module('ListlyApp')
     { 'get':    'GET /items/:id',
       'save':   'POST /items',
       'query':  'GET /items',
-      'delete': 'DELETE /items/:id',
+      'remove': 'DELETE /items/:id',
       'update': 'PUT /items/:id' };
     */
-    resource = $resource('/api/lists/:id', {
+    resource = $resource('/api/lists/:id', {id: '@id'},{
         update: {
           method: 'PUT' // this method issues a PUT request
         },

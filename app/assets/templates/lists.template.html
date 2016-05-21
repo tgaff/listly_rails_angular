@@ -34,13 +34,8 @@
           {{list.name}}
 
           <div class="pull-right">
-            <!-- pencil icon to toggle update form -->
-            <a ng-click="listsCtrl.toggleEditForm(list)">
-              <span class="glyphicon glyphicon-pencil"></span>
-            </a>
-
             <!-- trash can icon to delete todo -->
-             <a href="javascript:void(0)" class="delete-todo">
+             <a ng-click="listsCtrl.deleteList(list)">
               <span class="glyphicon glyphicon-trash"></span>
             </a>
           </div>
