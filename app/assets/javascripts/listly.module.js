@@ -9,6 +9,16 @@ function config (  $routeProvider,   $locationProvider  )  {
       controller: 'ListsController',
       controllerAs: 'listsCtrl'
     })
+    .when('/lists/:listId', {
+      templateUrl: 'list.template.html',
+      controller: 'ListController',
+      controllerAs: 'listCtrl'
+    })
+    .when('/lists', {  //note same as above, JIC
+      templateUrl: 'lists.template.html',
+      controller: 'ListsController',
+      controllerAs: 'listsCtrl'
+    })
     .otherwise({
       redirectTo: '/'
     });

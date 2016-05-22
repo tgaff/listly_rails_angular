@@ -1,0 +1,66 @@
+<!-- header -->
+<div class="well">
+  <div class="container">
+    <div class="page-header">
+      <h1>Listly - viewing list: <span>{{listCtrl.list.name}}</span></h1>
+    </div>
+  </div>
+</div>
+
+<!-- page content -->
+<div class="container">
+  <div class="row">
+
+    <div class="col-md-8 col-md-offset-2">
+
+      <!-- new list form-->
+      <form class="form-inline" ng-submit="listCtrl.createList()">
+        <div class="form-group">
+          <input ng-model="listCtrl.newItemName" type="text" name="list" class="form-control" placeholder="Name" autofocus>
+        </div>
+        <div class="form-group">
+          <input type="submit" class="btn btn-default" value="Create List">
+        </div>
+      </form>
+      <br>
+
+      <!-- list of items -->
+      <ul class="list-group">
+
+
+        <li class="list-group-item" ng-repeat="item in listCtrl.items">
+
+          <!--  description -->
+          {{item.name}}
+
+          <div class="pull-right">
+
+            <!-- pencil icon to toggle update form -->
+            <a ng-click="listCtrl.toggleEditForm(item)">
+              <span class="glyphicon glyphicon-pencil"></span>
+            </a>
+            <!-- trash can icon to delete todo -->
+             <a ng-click="listCtrl.deleteItem(item)">
+              <span class="glyphicon glyphicon-trash"></span>
+            </a>
+          </div>
+
+          <!-- form to update todo -->
+          <div ng-show="list.showForm">
+            <br>
+            <form class="form-inline update-todo">
+              <div class="form-group">
+                <input type="text" name="task" class="form-control" placeholder="Task" value="task">
+              </div>
+              <div class="form-group">
+                <input type="submit" class="btn btn-block btn-default" value="Update">
+              </div>
+            </form>
+          </div>
+        </li>
+
+
+      </ul>
+    </div>
+  </div>
+</div>
