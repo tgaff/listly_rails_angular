@@ -18,8 +18,8 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new(item_params)
 
-    if @item.save
-      render :show, status: :created, location: @item
+    if @list.items << @item
+      render :show, status: :created, location: list_item_path(@list, @item)
     else
       render json: @item.errors, status: :unprocessable_entity
     end

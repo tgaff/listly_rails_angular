@@ -13,6 +13,7 @@ function ListController(   ListsService,   ListService,   $location,   $routePar
   vm.deleteItem = deleteItem;
   vm.toggleEditForm = toggleEditForm;
   vm.updateItem = updateItem;
+  vm.createItem = createItem;
 
   getList(listId);
 
@@ -54,5 +55,21 @@ function ListController(   ListsService,   ListService,   $location,   $routePar
       var index = vm.items.indexOf(item);
       vm.items[index] = receivedItem;
     }
+  }
+
+  function createItem() {
+    var itemName = vm.newItemName;
+    console.log('create with', itemName);
+    if(vm.newItemName.length > 1) {
+      ListService.save({listId: listId},
+                       {name: itemName},
+                       handleCreateItemSuccess);
+      // blank out the box
+      vm.newItemName = '';
+    }
+  }
+  function handleCreateItemSuccess(item) {
+    console.log('created', item);
+    vm.items.unshift(item);
   }
 }
