@@ -2,8 +2,8 @@ angular
   .module('ListlyApp')
   .controller('ListController', ListController);
 
-ListController.$inject = ['ListsService', 'ListService', '$location', '$routeParams'];
-function ListController(   ListsService,   ListService,   $location,   $routeParams  ) {
+ListController.$inject = ['ListsService', 'ItemsService', '$location', '$routeParams'];
+function ListController(   ListsService,   ItemsService,   $location,   $routeParams  ) {
   var vm = this;
   console.log('ListController is live');
   var listId = $routeParams.listId;
@@ -32,7 +32,7 @@ function ListController(   ListsService,   ListService,   $location,   $routePar
     console.log('deleting item: ', item);
     // list_id was included by the rails representation of this item
     // we can use that, or we have access to the listId from the $routeParams
-    ListService.delete({ listId: item.list_id, itemId: item.id }, function(item) {
+    ItemsService.delete({ listId: item.list_id, itemId: item.id }, function(item) {
       console.log('deleted', item);
       vm.items.splice(vm.items.indexOf(item), 1);
     });
@@ -47,7 +47,7 @@ function ListController(   ListsService,   ListService,   $location,   $routePar
 
   function updateItem(item) {
     console.log('update item', item);
-    ListService.update({listId: item.list_id, itemId: item.id}, item, updateItemSuccess);
+    ItemsService.update({listId: item.list_id, itemId: item.id}, item, updateItemSuccess);
 
     function updateItemSuccess(receivedItem) {
       console.log('updateItemSuccess', receivedItem);
@@ -61,7 +61,7 @@ function ListController(   ListsService,   ListService,   $location,   $routePar
     var itemName = vm.newItemName;
     console.log('create with', itemName);
     if(vm.newItemName.length > 1) {
-      ListService.save({listId: listId},
+      ItemsService.save({listId: listId},
                        {name: itemName},
                        handleCreateItemSuccess);
       // blank out the box
