@@ -1,5 +1,5 @@
 class ListsController < ApplicationController
-  before_action :set_list, only: [:show, :edit, :update, :destroy]
+  before_action :set_list, only: [:show, :update, :destroy]
 
   # GET /lists
   # GET /lists.json
@@ -12,42 +12,25 @@ class ListsController < ApplicationController
   def show
   end
 
-  # GET /lists/new
-  def new
-    @list = List.new
-  end
-
-  # GET /lists/1/edit
-  def edit
-  end
-
   # POST /lists
   # POST /lists.json
   def create
     @list = List.new(list_params)
 
-    respond_to do |format|
-      if @list.save
-        format.html { redirect_to @list, notice: 'List was successfully created.' }
-        format.json { render :show, status: :created, location: @list }
-      else
-        format.html { render :new }
-        format.json { render json: @list.errors, status: :unprocessable_entity }
-      end
+    if @list.save
+      render :show, status: :created, location: @list
+    else
+      render json: @list.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /lists/1
   # PATCH/PUT /lists/1.json
   def update
-    respond_to do |format|
-      if @list.update(list_params)
-        format.html { redirect_to @list, notice: 'List was successfully updated.' }
-        format.json { render :show, status: :ok, location: @list }
-      else
-        format.html { render :edit }
-        format.json { render json: @list.errors, status: :unprocessable_entity }
-      end
+    if @list.update(list_params)
+      render :show, status: :ok, location: @list
+    else
+      render json: @list.errors, status: :unprocessable_entity
     end
   end
 
@@ -55,10 +38,7 @@ class ListsController < ApplicationController
   # DELETE /lists/1.json
   def destroy
     @list.destroy
-    respond_to do |format|
-      format.html { redirect_to lists_url, notice: 'List was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    head :no_content
   end
 
   private
