@@ -29,7 +29,7 @@ class ItemsController < ApplicationController
   # PATCH/PUT /items/1.json
   def update
     if @item.update(item_params)
-      render :show, status: :ok, location: @item
+      render :show, status: :ok, location: list_item_path(@list, @item)
     else
       render json: @item.errors, status: :unprocessable_entity
     end
