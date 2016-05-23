@@ -72,4 +72,5 @@ function ListController(   ListsService,   ListService,   $location,   $routePar
     console.log('created', item);
     vm.items.unshift(item);
   }
+
 }

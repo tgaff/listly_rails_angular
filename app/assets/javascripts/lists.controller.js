@@ -3,12 +3,11 @@ angular
   .controller('ListsController', ListsController);
 
 ListsController.$inject = ['ListsService', '$location'];
-function ListsController(   ListsService,   $location    ) {
+function ListsController(   ListsService,   $location  ) {
   var vm = this;
   console.log('ListsController is live');
   vm.lists = [];
   vm.newListName = '';
-  vm.toggleEditForm = toggleEditForm;
   vm.deleteList = deleteList;
   vm.createList = createList;
   vm.showList = showList;
@@ -23,14 +22,18 @@ function ListsController(   ListsService,   $location    ) {
     });
   }
 
-  function deleteList(list) {
+  function deleteList(list, $event) {
     ListsService.remove({id: list.id}, handleDeleteSuccess);
+      // we can get access to the 'click' or other event using $event (see the template also)
+      // we don't want to trigger both deleteList and showList so we stop event propagation
+      $event.stopPropagation();
 
       // declaring this inside deleteList to have a closure around list variable
       function handleDeleteSuccess(data) {
         console.log('deleted');
         vm.lists.splice(vm.lists.indexOf(list), 1);
       }
+
   }
 
   function createList() {
