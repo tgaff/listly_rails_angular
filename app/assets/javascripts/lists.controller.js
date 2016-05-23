@@ -15,9 +15,6 @@ function ListsController(   ListsService,   $location    ) {
   // fetch data
   getLists();
 
-  function toggleEditForm(list) {
-    list.showForm = !list.showForm;
-  }
 
   function getLists() {
     ListsService.query(function(data){

@@ -11,7 +11,8 @@ function ListController(   ListsService,   ListService,   $location,   $routePar
   vm.items = [];
 
   vm.deleteItem = deleteItem;
-
+  vm.toggleEditForm = toggleEditForm;
+  vm.updateItem = updateItem;
 
   getList(listId);
 
@@ -34,5 +35,24 @@ function ListController(   ListsService,   ListService,   $location,   $routePar
       console.log('deleted', item);
       vm.items.splice(vm.items.indexOf(item), 1);
     });
+  }
+
+
+  function toggleEditForm(item) {
+    console.log('toggleEditForm for', item);
+    // initially this property won't exist
+    item.showForm = !item.showForm;
+  }
+
+  function updateItem(item) {
+    console.log('update item', item);
+    ListService.update({listId: item.list_id, itemId: item.id}, item, updateItemSuccess);
+
+    function updateItemSuccess(receivedItem) {
+      console.log('updateItemSuccess', receivedItem);
+      // find the item in the array and replace it
+      var index = vm.items.indexOf(item);
+      vm.items[index] = receivedItem;
+    }
   }
 }

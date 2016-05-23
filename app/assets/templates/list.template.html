@@ -46,11 +46,11 @@
           </div>
 
           <!-- form to update todo -->
-          <div ng-show="list.showForm">
+          <div ng-show="item.showForm">
             <br>
-            <form class="form-inline update-todo">
+            <form class="form-inline update-todo" ng-submit="listCtrl.updateItem(item)">
               <div class="form-group">
-                <input type="text" name="task" class="form-control" placeholder="Task" value="task">
+                <input type="text" name="task" class="form-control" ng-model="item.name">
               </div>
               <div class="form-group">
                 <input type="submit" class="btn btn-block btn-default" value="Update">
