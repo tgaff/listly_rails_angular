@@ -84,7 +84,7 @@ list_items GET    /api/lists/:list_id/items(.:format)     items#index {:format=>
       controllerAs: 'listsCtrl'
     })
     .when('/lists/:listId', {
-      templateUrl: 'list.template.html',
+      templateUrl: 'list.template.html',  // :eyes: on the 's'
       controller: 'ListController',
       controllerAs: 'listCtrl'
     })
@@ -108,8 +108,9 @@ list_items GET    /api/lists/:list_id/items(.:format)     items#index {:format=>
 1. Create a new Rails application with a Postgres database and _no javascript_ or tests:
 
  ```bash
-    rails new listly --skip-javascript --database=postgresql -T 	cd listly
- 	rake db:create
+    rails new listly --skip-javascript --database=postgresql -T
+    cd listly
+ 	 rake db:create
  ```
  
   > We disabled javascript generation.  This way the app won't have turbolinks or jquery.  We'll add angular in just a bit.
