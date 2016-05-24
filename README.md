@@ -2,20 +2,25 @@
 
 In this activity we will build a Rails app with an angular front-end.  
 
-## options
+## Options
 
 There are a couple of ways to do this:
 
-1) Build an API in rails
-2) Build a separate app in Angular and host it separately
+1. two separate apps
+    1. Build an API in rails that serves only JSON
+    2. Build a separate app in Angular and host it separately
 
  --  **OR** --
  
-Build an angular and rails app together and configure the rails app to use the asset pipeline and host the angular app.  Serve one route for the angular app and the rest of the routes will serve JSON that angular will consume.
+2. One app with /api routes and asset pipeline.
+    
+    Build an angular and rails app together and configure the rails app to use the asset pipeline and host the angular app.  Serve one route for the angular app and the rest of the routes will serve JSON that angular will consume.
 
 We're going to be taking the second approach.  
 
 ## New tools
+
+To help us use angular in rails we're going to use a few new tools.
 
 ##### Gem: `angular-rails-templates`
 
@@ -70,6 +75,8 @@ list_items GET    /api/lists/:list_id/items(.:format)     items#index {:format=>
  
   > We disabled javascript.  This way the app won't have turbolinks or jquery.  We'll add angular in just a bit.
 
+2. Go [setup bootstrap](https://github.com/twbs/bootstrap-sass).  You can _skip_ setting up bootstrap's javascript.
+
 3. Create a `SiteController` with an `angular` action. You'll also need to create `site/angular.html.erb` inside `app/views`. Your `site#angular` will serve as the "layout" for your Angular app.
 
 #### Server Routes
@@ -84,9 +91,9 @@ You can use `get '*path'` to send every server-requested route to `site#index`:
  #
 
  Rails.application.routes.draw do
-   root 'site#index'
+   root 'site#angular'
    
-   get '*path', to: 'site#index'
+   get '*path', to: 'site#angular'
  end
  ```
 
@@ -100,12 +107,12 @@ You can use `get '*path'` to send every server-requested route to `site#index`:
   $ curl https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular-route.js > vendor/assets/javascripts/angular-route.js
   ```
   
-1. Previously we disabled javascript, so we need to re-enable that.  In your application layout add the javascript include tag.
+1. Previously we disabled javascript, so we need to re-enable that.  In your application layout add the `javascript_include_tag`.
 
 	```html
 	<!-- application.html.erb -->
 	<!DOCTYPE html>
-	<html ng-app="ListlyApp">
+	<html>
 	<head>
 	  <title>Listly</title>
 	  <%= stylesheet_link_tag    'application', media: 'all' %>
@@ -178,13 +185,13 @@ You can use `get '*path'` to send every server-requested route to `site#index`:
 	</html>
 	```
 
-4. We're using **ngRoute** so add the required `ng-view` tag to the angular view.  
-
-```html
-  <!-- app/views/site/angular.html.erb -->
-  
-  <div ng-view></div>
-```
+4. We're using **ngRoute** so add the required `ng-view` tag to the [angular view](/app/views/site/angular.html.erb).
+    
+    ```html
+      <!-- app/views/site/angular.html.erb -->
+      
+      <div ng-view></div>
+    ```
 
 5. Configure your Angular app in `listly.module.js`:
 
@@ -231,7 +238,7 @@ You can use `get '*path'` to send every server-requested route to `site#index`:
 	console.log('application.js loaded');
 	```
 
- **Note:** Make sure you require your templates AFTER your Angular files and BEFORE `app.js`.
+ **Note:** Make sure you require your templates AFTER your Angular files and BEFORE `listly.module.js`.
 
 3. Make a `templates` directory inside `app/assets`, and create a template:
 
@@ -294,8 +301,8 @@ angular
   .module('ListlyApp')
   .controller('ListsController', ListsController);
 
-ListsController.$inject = ['ListsService', '$location'];
-function ListsController(   ListsService,   $location  ) {
+ListsController.$inject = ['$location'];
+function ListsController(   $location  ) {
   var vm = this;
   console.log('ListsController is live');
   vm.lists = [{ id: 1, name: 'homework list'}, { id: 300, name: 'shopping'}];
@@ -305,12 +312,17 @@ function ListsController(   ListsService,   $location  ) {
 3. On your own, add a little content to your template to test the controller and router.  Test it and make sure content from your ListsController is rendered before continuing.
 
   > hint: try to get the sampleData above onto the page.
+  > If you see javascript errors, resolve them before proceeding.
 
 #### Rails CRUD
 
 Now that your Angular app is all set up, it's time to CRUD a resource! You'll need:
 
-1. CRUD routes for your resource.  Use `scope` here to put your routes under `/api/`
+1. CRUD the basic API routes for the **`lists`** and **`items`** resources.  
+  * Use `scope` here to put your routes under `/api/`
+  * set the /api routes format to always use JSON.  `defaults: { format: :json }`
+  * Use resources for restful routes...
+     * ..but we don't need `new` or `edit` pages since we won't be serving HTML and therefore have no need of forms for our users to fill in.
 
     ```ruby
     #
