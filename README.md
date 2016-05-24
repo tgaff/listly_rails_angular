@@ -329,22 +329,22 @@ You can use `get '*path'` to send every server-requested route to `site#index`:
 	
 2. Create and configure a controller with some test data, so you can check to see if the route, template, and controller are properly connected:
 
-```js
-/*
-* app/assets/javascripts/lists.controller.js
-*/
-
-angular
-  .module('ListlyApp')
-  .controller('ListsController', ListsController);
-
-ListsController.$inject = ['$location'];
-function ListsController(   $location  ) {
-  var vm = this;
-  console.log('ListsController is live');
-  vm.lists = [{ id: 1, name: 'homework list'}, { id: 300, name: 'shopping'}];
-  vm.sampleData = 'hello world';
-```
+    ```js
+    /*
+    * app/assets/javascripts/lists.controller.js
+    */
+    
+    angular
+      .module('ListlyApp')
+      .controller('ListsController', ListsController);
+    
+    ListsController.$inject = ['$location'];
+    function ListsController(   $location  ) {
+      var vm = this;
+      console.log('ListsController is live');
+      vm.lists = [{ id: 1, name: 'homework list'}, { id: 300, name: 'shopping'}];
+      vm.sampleData = 'hello world';
+    ```
 
 3. On your own, add a little content to your template to test the controller and router.  Test it and make sure content from your ListsController is rendered before continuing.
 
@@ -413,10 +413,11 @@ Now that your Angular app is all set up, it's time to CRUD a resource! You'll ne
 
 1. An angular [controller](app/assets/javascripts/lists.controller.js) is provided for you, go ahead and drop it into `app/assets/javascripts/lists.controller.js`. 
 
-1. Do the same thing with the [service](app/assets/javascripts/lists.service.js) that we'll use to communicate with the API.  Put this in `app/assets/javascripts/lists.controller.js`.
+1. Do the same thing with the [service](app/assets/javascripts/lists.service.js) that we'll use to communicate with the API.  Put this in `app/assets/javascripts/lists.service.js`.
   
   Take a look at the code here; since we're using RESTful routes we can make use of ngResource.  Instead of writing all the AJAX code ourselves using $http; we can use the pre-built [ngResource](https://docs.angularjs.org/api/ngResource/service/$resource#!).
-  * If this is configured properly you can simply call methods like 
+  * If this is configured properly you can simply call methods like `query`, `remove`, `save`, `update` and `get`.
+  * This is a big win for best-practices - we can write much less code and work more quickly because we stuck to RESTful conventions in our API.
 
 1. We need to install ngResource first.  Use curl to store it in `vendor/assets`.  
 
@@ -424,7 +425,7 @@ Now that your Angular app is all set up, it's time to CRUD a resource! You'll ne
     curl https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular-resource.js  > vendor/assets/angular-resource.js
     ```
 
-Make sure you also add it to [`app/assets/javascripts/application.js`](app/assets/javascripts/application.js)
+  > Make sure you also add it to [`app/assets/javascripts/application.js`](app/assets/javascripts/application.js)
 
 1. Finally grab the [provided template](app/assets/templates/lists.template.html) and replace the source of your current template with this.  
 
