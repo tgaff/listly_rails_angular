@@ -429,8 +429,19 @@ Make sure you also add it to [`app/assets/javascripts/application.js`](app/asset
 1. Finally grab the [provided template](app/assets/templates/lists.template.html) and replace the source of your current template with this.  
 
 
-#### Challenge
+## Challenge
 
-Continue to implement the next model and controller.  Files you'll need to generate:
+On your own, continue to implement the Items resource and views.  Files you'll need to create are listed below:
+
+#### Rails:
+
+* items controller
+  * make sure that items belong to lists
+  * the routes are already present
+
+  
+#### Angular:
 
 * Items controller
+* Items Service
+* Items Template (use [app/assets/templates/list.template.html](app/assets/templates/list.template.html))
