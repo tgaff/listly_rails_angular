@@ -1,5 +1,5 @@
 angular.module('ListlyApp')
-  .factory('ListsService', ListsService);
+  .service('ListsService', ListsService);
 
   ListsService.$inject = ['$http', '$q', '$resource'];
   function ListsService($http, $q, $resource) {
