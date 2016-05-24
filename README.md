@@ -318,9 +318,9 @@ function ListsController(   $location  ) {
 
 Now that your Angular app is all set up, it's time to CRUD a resource! You'll need:
 
-1. Create the basic API routes for the **`lists`** and **`items`** resources.  
+1. Create the basic API routes (`config/routes.rb`) for the **`lists`** and **`items`** resources.  
   * Use `scope` here to put your routes under `/api/`
-  * set the /api routes format to always use JSON.  `defaults: { format: :json }`
+  * set the /api routes format to default to use JSON.  `defaults: { format: :json }`
   * Use resources for restful routes...
      * ..but we don't need `new` or `edit` pages since we won't be serving HTML and therefore have no need of forms for our users to fill in.
 
@@ -357,8 +357,18 @@ Now that your Angular app is all set up, it's time to CRUD a resource! You'll ne
   
   </details>
 
-1. Generate the lists controller.  In the interest of saving time, please [use the code provided for you](app/controllers/lists_controller.rb).  Make sure you read over it.  Things to take note of:
+1. Generate a `List` model with a `name` attribute.
+
+1. Generate an `Item` model with a `name` attribute & a reference to the list it belongs_to.  Configure the rails models such that:
+  * _List has many items_
+  * _Item belongs to List_
+
+
+1. Generate the lists controller.  In the interest of saving time, please replace it's code with the [code provided for you](app/controllers/lists_controller.rb).  Make sure you read over it first.  Things to take note of:
   * the controller is designed with only JSON in mind
+  * it doesn't have `new` or `edit` because we don't need them
+    * see also `except: [:new, :edit]` in the `routes.rb` file.
+  * `#destroy` doesn't send any data, just _204 No Content_
 
 1. Use the rails console or the [provided seeds.rb](db/seeds.rb) to get some data into the database.  Manually visit **and test** the `/api/lists` route.
 
@@ -368,7 +378,8 @@ Now that your Angular app is all set up, it's time to CRUD a resource! You'll ne
 
 1. Do the same thing with the [service](app/assets/javascripts/lists.service.js) that we'll use to communicate with the API.  Put this in `app/assets/javascripts/lists.controller.js`.
   
-  You might take a look at the code here; since we're using RESTful routes we can make use of ngResource.  Instead of writing all the AJAX code ourselves using $http; we can use the pre-build ngResource.
+  Take a look at the code here; since we're using RESTful routes we can make use of ngResource.  Instead of writing all the AJAX code ourselves using $http; we can use the pre-built [ngResource](https://docs.angularjs.org/api/ngResource/service/$resource#!).
+  * If this is configured properly you can simply call methods like 
 
 1. We need to install ngResource first.  Use curl to store it in `vendor/assets`.  
 
@@ -379,3 +390,11 @@ Now that your Angular app is all set up, it's time to CRUD a resource! You'll ne
 Make sure you also add it to [`app/assets/javascripts/application.js`](app/assets/javascripts/application.js)
 
 1. Finally grab the [provided template](app/assets/templates/lists.template.html) and replace the source of your current template with this.  
+
+
+#### Challenge
+
+Continue to implement the next model and controller.  Files you'll need to generate:
+
+* Items controller
+* 
