@@ -1,4 +1,7 @@
-# Rails + Angular
+# Listly: Rails + Angular
+> A TODO style-app
+
+![](https://rereno2.files.wordpress.com/2011/01/listing-boat.jpg)
 
 In this activity we will build a Rails app with an angular front-end.  
 
@@ -6,7 +9,7 @@ In this activity we will build a Rails app with an angular front-end.
 
 There are a couple of ways to do this:
 
-1. two separate apps
+1. Two separate apps
     1. Build an API in rails that serves only JSON
     2. Build a separate app in Angular and host it separately
 
@@ -100,8 +103,9 @@ list_items GET    /api/lists/:list_id/items(.:format)     items#index {:format=>
 
 ## Getting started - Rails side
 
+> For this lab, do not fork and clone.
 
-1. Create a new Rails application with a Postgres database and _no javascript_:
+1. Create a new Rails application with a Postgres database and _no javascript_ or tests:
 
  ```bash
     rails new listly --skip-javascript --database=postgresql -T 	cd listly
