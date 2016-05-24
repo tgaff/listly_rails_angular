@@ -510,7 +510,18 @@ On your own, continue to implement the **Items resource and views**.  That inclu
 * Items controller
 * Items Service
 * Items Template (use [app/assets/templates/list.template.html](app/assets/templates/list.template.html))
-* Add `/items/:id` to the angular router.
+* Add `/lists/:id` to the angular router.
+
+    Note that the `lists.controller` already contains a `showList` method:
+
+    ```js
+      function showList(list) {
+        console.log('transition to showing list:', list);
+        $location.path('/lists/' + list.id);
+      }
+    ```
+    This method tries to transition to the missing `/lists/:id` route.
+    * Each list name is also already connected to this method via `ng-click`
 
 > Make good use of the Rails error messages, and the javascript console.
 
