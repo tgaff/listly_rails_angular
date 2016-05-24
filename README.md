@@ -29,7 +29,7 @@ To help us use angular in rails we're going to use a few new tools.
 
 We'll use this to put our angular templates into the asset pipeline.  They will live inside `app/assets/templates`.
 
-##### Gem: `angular_rails_csrf`
+##### Gem: [`angular_rails_csrf`](https://github.com/jsanders/angular_rails_csrf)
 
 This handles setting a cookie in our angular app to work alongside Rails's _Cross-Site request forgery_ protection.  Without this our POST, PUT and DELETE requests would be rejected for security reasons.
 
@@ -433,6 +433,14 @@ Now that your Angular app is all set up, it's time to CRUD a resource! You'll ne
 
 1. Finally grab the [provided template](app/assets/templates/lists.template.html) and replace the source of your current template with this.  
 
+#### CSRF protection
+
+You should at this point be able to fetch lists from the API, but you will get an error due to CSRF if you try to save changes.  We need to add a gem to work alongside Rails's CSRF security mechanism.
+
+1. Add [`angular_rails_csrf`](https://github.com/jsanders/angular_rails_csrf) gem to your Gemfile.
+
+1. `bundle`, and restart the server
+1. Verify that POST now works.
 
 ## Challenge
 
@@ -450,3 +458,5 @@ On your own, continue to implement the Items resource and views.  Files you'll n
 * Items controller
 * Items Service
 * Items Template (use [app/assets/templates/list.template.html](app/assets/templates/list.template.html))
+
+> If you get stuck there are a few files here to help you.
