@@ -1,8 +1,8 @@
 angular.module('ListlyApp')
   .service('ListsService', ListsService);
 
-  ListsService.$inject = ['$http', '$q', '$resource'];
-  function ListsService($http, $q, $resource) {
+  ListsService.$inject = ['$resource'];
+  function ListsService($resource) {
 
     /* ngResource <3 RESTful routes
     { 'get':    'GET /items/:id',
