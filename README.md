@@ -34,12 +34,13 @@ This handles setting a cookie in our angular app to work alongside Rails's _Cros
 
 * Our app is a TODO app.  
 * It has **lists**.  
-* **Lists** have many **items**.
-* There are two main **front-end** pages/templates:
-  * `/` or `/lists` which shows all the lists
-  * `/lists/:id/` which lists all the list itmes and allows you to add/delete.
-  * **Both of these are actually provided by the angular router, not Rails**  The Rails app only serves JSON + one HTML page.
+  * **Lists** have many **items**.
 * All of our /api routes on the backend are RESTful.  
+* We have **two routers**
+  * backend rails router
+  * frontend ngRoute
+
+#### Backend routes provided by Rails
 
 Our routes on the backend look like:
 
@@ -63,6 +64,40 @@ list_items GET    /api/lists/:list_id/items(.:format)     items#index {:format=>
 * Notice the `/` route and the `/*path` route - these serve the same HTML all the time.  This is how we'll load angular.
 
 
+#### Frontend Angular routes
+
+* There are two main **front-end** pages/templates:
+  * `/` or `/lists` which shows all the lists  (lists index)
+  * `/lists/:id/` which lists all the list items and allows you to add/delete.  (list show or item index)
+  * **Both of these are actually provided by the angular router, not Rails**  The Rails app only serves JSON + one HTML page.
+
+<details><summary>click to see the front-end router code</summary>
+
+```js
+  $routeProvider
+    .when('/', {
+      templateUrl: 'lists.template.html',
+      controller: 'ListsController',
+      controllerAs: 'listsCtrl'
+    })
+    .when('/lists/:listId', {
+      templateUrl: 'list.template.html',
+      controller: 'ListController',
+      controllerAs: 'listCtrl'
+    })
+    .when('/lists', {  //note same as above, JIC
+      templateUrl: 'lists.template.html',
+      controller: 'ListsController',
+      controllerAs: 'listsCtrl'
+    })
+    .otherwise({
+      redirectTo: '/'
+    });
+```
+
+</details>
+
+
 ## Getting started - Rails side
 
 
@@ -73,15 +108,17 @@ list_items GET    /api/lists/:list_id/items(.:format)     items#index {:format=>
  	rake db:create
  ```
  
-  > We disabled javascript.  This way the app won't have turbolinks or jquery.  We'll add angular in just a bit.
+  > We disabled javascript generation.  This way the app won't have turbolinks or jquery.  We'll add angular in just a bit.
 
 2. Go [setup bootstrap](https://github.com/twbs/bootstrap-sass).  You can _skip_ setting up bootstrap's javascript.
 
 3. Create a `SiteController` with an `angular` action. You'll also need to create `site/angular.html.erb` inside `app/views`. Your `site#angular` will serve as the "layout" for your Angular app.
 
+  <details><summary>Click to see command to generate this controller</summary>`rails g controller site angular`</details>
+
 #### Server Routes
 
-1. Since `site#angular` is the "layout" for your Angular app, you want the server to respond with this view every time a route is requested. This will allow Angular to handle routing on the client-side.
+1. Since `site#angular` is the "layout" for your Angular app, you want the server to respond with this view every time a route is requested. This will allow Angular to handle routing on the client-side.  Of course it should also be the _root route_.
 
 You can use `get '*path'` to send every server-requested route to `site#index`:
 
@@ -100,14 +137,14 @@ You can use `get '*path'` to send every server-requested route to `site#index`:
 
 #### Requiring Angular
 
-1. As you've seen before, there are many ways to require assets in Rails. In this case let's use the asset pipeline.  Download angular into vendor/assets.  
+1. As you've seen before, there are many ways to require assets in Rails. In this case let's use the asset pipeline and store them in vendor.  Download angular into vendor/assets.  
 
   ```sh
   $ curl https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.js > vendor/assets/javascripts/angular.js
   $ curl https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular-route.js > vendor/assets/javascripts/angular-route.js
   ```
   
-1. Previously we disabled javascript, so we need to re-enable that.  In your application layout add the `javascript_include_tag`.
+1. Previously we disabled javascript, so now we need to manually set it up.  In your application layout add the `javascript_include_tag`.
 
 	```html
 	<!-- application.html.erb -->
@@ -397,4 +434,3 @@ Make sure you also add it to [`app/assets/javascripts/application.js`](app/asset
 Continue to implement the next model and controller.  Files you'll need to generate:
 
 * Items controller
-* 
