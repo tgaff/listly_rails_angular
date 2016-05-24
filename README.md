@@ -318,7 +318,7 @@ function ListsController(   $location  ) {
 
 Now that your Angular app is all set up, it's time to CRUD a resource! You'll need:
 
-1. CRUD the basic API routes for the **`lists`** and **`items`** resources.  
+1. Create the basic API routes for the **`lists`** and **`items`** resources.  
   * Use `scope` here to put your routes under `/api/`
   * set the /api routes format to always use JSON.  `defaults: { format: :json }`
   * Use resources for restful routes...
@@ -338,21 +338,44 @@ Now that your Angular app is all set up, it's time to CRUD a resource! You'll ne
     end
     ```
 
-2. A controller with CRUD actions that renders JSON:
+1. **OPTIONAL**: If you don't want to have to remove the html.erb and assets (js/css) files each time you `rails generate` you can:
+  <details><summary>disable asset and html.erb generation</summary>
+      
+    ```rb
+    # 
+    # config/application.rb
+    #
+      
+    # prevent scaffold from generating html.erb view templates, assets
+    config.generators do |g|
+      g.template_engine nil
+      g.assets false
+    end
+    
+    ```
+    If you're uncertain where to put this check out the [example](config/application.rb)
+  
+  </details>
 
+1. Generate the lists controller.  In the interest of saving time, please [use the code provided for you](app/controllers/lists_controller.rb).  Make sure you read over it.  Things to take note of:
+  * the controller is designed with only JSON in mind
 
-  ```ruby
-  #
-  # app/controllers/api/todos_controller.rb
-  #
+1. Use the rails console or the [provided seeds.rb](db/seeds.rb) to get some data into the database.  Manually visit **and test** the `/api/lists` route.
 
-   def create
-     @todo = Todo.new(todo_params)
-     if @todo.save
-       render json: @todo
-     else
-       render json: { errors: @todo.errors.full_messages.join(", ") }, status: :unprocessable_entity
-     end
-   end
+#### Angular setup
 
- ```
+1. An angular [controller](app/assets/javascripts/lists.controller.js) is provided for you, go ahead and drop it into `app/assets/javascripts/lists.controller.js`. 
+
+1. Do the same thing with the [service](app/assets/javascripts/lists.service.js) that we'll use to communicate with the API.  Put this in `app/assets/javascripts/lists.controller.js`.
+  
+  You might take a look at the code here; since we're using RESTful routes we can make use of ngResource.  Instead of writing all the AJAX code ourselves using $http; we can use the pre-build ngResource.
+
+1. We need to install ngResource first.  Use curl to store it in `vendor/assets`.  
+
+    ```sh
+    curl https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular-resource.js  > vendor/assets/angular-resource.js
+    ```
+
+Make sure you also add it to [`app/assets/javascripts/application.js`](app/assets/javascripts/application.js)
+
+1. Finally grab the [provided template](app/assets/templates/lists.template.html) and replace the source of your current template with this.  
