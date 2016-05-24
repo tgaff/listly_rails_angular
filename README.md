@@ -312,7 +312,7 @@ You can use `get '*path'` to send every server-requested route to `site#index`:
   * app/assets/javascripts/listly.module.js
   */
 
- angular.module('sampleApp', ['ngRoute', 'templates']);
+ angular.module('ListlyApp', ['ngRoute', 'templates']);
  ```
 
 > Note at this stage, you haven't added anything to display your template.  Its content will NOT be displayed yet.
